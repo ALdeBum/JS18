@@ -69,8 +69,11 @@ function showMovieDetails(id) {
 function setupPagination(totalPages, title, type, currentPage) {
     paginationContainer.innerHTML = '';
 
-    const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
-    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    // Кнопка для перехода на первую страницу
+    const firstPageButton = document.createElement('button');
+    firstPageButton.textContent = 'First';
+    firstPageButton.onclick = () => searchMovies(title, type, 1);
+    paginationContainer.appendChild(firstPageButton);
 
     // Кнопка "Предыдущая"
     if (currentPage > 1) {
@@ -79,6 +82,9 @@ function setupPagination(totalPages, title, type, currentPage) {
         prevButton.onclick = () => searchMovies(title, type, currentPage - 1);
         paginationContainer.appendChild(prevButton);
     }
+
+    const startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
 
     // Отображение страниц
     for (let i = startPage; i <= endPage; i++) {
@@ -98,4 +104,27 @@ function setupPagination(totalPages, title, type, currentPage) {
         nextButton.onclick = () => searchMovies(title, type, currentPage + 1);
         paginationContainer.appendChild(nextButton);
     }
+
+    // Кнопка для перехода на последнюю страницу
+    const lastPageButton = document.createElement('button');
+    lastPageButton.textContent = 'Last';
+    lastPageButton.onclick = () => searchMovies(title, type, totalPages);
+    paginationContainer.appendChild(lastPageButton);
+
+    // Поле для ввода номера страницы
+    const pageInput = document.createElement('input');
+    pageInput.type = 'number';
+    pageInput.min = 1;
+    pageInput.max = totalPages;
+    pageInput.value = currentPage;
+    pageInput.style.marginLeft = '10px'; // Добавим немного пространства
+    pageInput.onchange = () => {
+        const pageNumber = Number(pageInput.value);
+        if (pageNumber >= 1 && pageNumber <= totalPages) {
+            searchMovies(title, type, pageNumber);
+        }
+    };
+    paginationContainer.appendChild(pageInput);
 }
+
+

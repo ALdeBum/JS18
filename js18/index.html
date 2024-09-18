@@ -19,9 +19,16 @@
         </select>
         <button type="submit">Search</button>
     </form>
-
+    
     <div id="movies"></div>
-    <div id="pagination" class="pagination"></div>
+    <div id="pagination" class="pagination">
+        <!-- Кнопки для пагинации -->
+        <button id="firstPage" style="display: none;">First</button>
+        <input type="number" id="pageNumber" min="1" placeholder="Go to page..." style="width: 100px; display: none;">
+        <button id="goToPage" style="display: none;">Go</button>
+        <button id="lastPage" style="display: none;">Last</button>
+    </div>
+    
 
     <script src="script.js"></script>
 
